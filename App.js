@@ -11,7 +11,8 @@ import {
   Text,
   View,
   Platform,
-  TouchableOpacity,
+  TextInput,
+  Slider,
 } from 'react-native';
 
 
@@ -21,6 +22,35 @@ export default class App extends Component {
       <View style={styles.container}>
         <View style={styles.header}>
             <Text style={styles.textHeader}>Color Picker</Text>
+        </View>
+        <View style={styles.body}>
+            <View style={{ width: 350, height:300, flexDirection: 'column'}}>
+                <View style={{ flex: 1,  }}>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text>R</Text>
+                        <Slider style={{ width: 200, marginLeft: 5, marginRight: 5 }} />
+                        <View>
+                            <TextInput value="0" style={{ width: 50, height: 30 , borderColor: 'gray', borderWidth: 1, borderRadius: 5, paddingBottom: 5, underlineColorAndroid : 'transparent' }} />
+                        </View>
+                    </View>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text>G</Text>
+                        <Slider style={{ width: 200, marginLeft: 5, marginRight: 5 }} />
+                        <View>
+                            <TextInput value="0" style={{ width: 50, height: 30 , borderColor: 'gray', borderWidth: 1, borderRadius: 5, paddingBottom: 5, underlineColorAndroid : 'transparent' }} />
+                        </View>
+                    </View>
+                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        <Text>B</Text>
+                        <Slider style={{ width: 200, marginLeft: 5, marginRight: 5 }} />
+                        <View>
+                            <TextInput value="0" style={{ width: 50, height: 30 , borderColor: 'gray', borderWidth: 1, borderRadius: 5, paddingBottom: 5, underlineColorAndroid : 'transparent' }} />
+                        </View>
+                    </View>
+                </View>
+                <View style={{ flex: 1, }}>
+                </View>
+            </View>
         </View>
       </View>
     );
@@ -41,6 +71,11 @@ const styles = StyleSheet.create({
       shadowOffset: {width: 0, height: 2, },
       shadowOpacity: 0.5,
       elevation: 5,
+  },
+  body: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',        
   },
   textHeader: {
       fontSize: 16,
