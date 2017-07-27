@@ -15,40 +15,46 @@ import {
   Slider,
 } from 'react-native';
 
+class ColorControl extends Component {
+    constructor(props) {
+        super(props);
+        this.state = props;
+    }
 
+    render() {
+        return(
+            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                <Text>{this.state.title}</Text>
+                <Slider onValueChange = { (val) => { 
+                    this.setState({value: val});
+                     } } value = {this.state.value} style={styles.slider} minimumValue = {0} maximumValue = {255} step = {1} />
+                <View>
+                    <TextInput value={`${this.state.value}`} underlineColorAndroid = 'transparent' style={styles.textinput} />
+                </View>
+            </View>
+        )
+    }
+}
 export default class App extends Component {
+    renderHeader = () => {
+        return (
+            <View style={styles.header}>
+                <Text style={styles.textHeader}>Color Picker</Text>
+            </View>
+        )
+    }
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-            <Text style={styles.textHeader}>Color Picker</Text>
-        </View>
+        {this.renderHeader()}
         <View style={styles.body}>
             <View style={{ width: 350, height:300, flexDirection: 'column'}}>
                 <View style={{ flex: 1,  }}>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <Text>R</Text>
-                        <Slider style={{ width: 200, marginLeft: 5, marginRight: 5 }} />
-                        <View>
-                            <TextInput value="0" style={{ width: 50, height: 30 , borderColor: 'gray', borderWidth: 1, borderRadius: 5, paddingBottom: 5, underlineColorAndroid : 'transparent' }} />
-                        </View>
-                    </View>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <Text>G</Text>
-                        <Slider style={{ width: 200, marginLeft: 5, marginRight: 5 }} />
-                        <View>
-                            <TextInput value="0" style={{ width: 50, height: 30 , borderColor: 'gray', borderWidth: 1, borderRadius: 5, paddingBottom: 5, underlineColorAndroid : 'transparent' }} />
-                        </View>
-                    </View>
-                    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <Text>B</Text>
-                        <Slider style={{ width: 200, marginLeft: 5, marginRight: 5 }} />
-                        <View>
-                            <TextInput value="0" style={{ width: 50, height: 30 , borderColor: 'gray', borderWidth: 1, borderRadius: 5, paddingBottom: 5, underlineColorAndroid : 'transparent' }} />
-                        </View>
-                    </View>
+                    <ColorControl title="R" value={100} />
+                    <ColorControl title="G" value={150} />
+                    <ColorControl title="B" value={200} />
                 </View>
-                <View style={{ flex: 1, }}>
+                <View style={{ flex: 1, backgroundColor: 'red' }}>
                 </View>
             </View>
         </View>
@@ -71,6 +77,19 @@ const styles = StyleSheet.create({
       shadowOffset: {width: 0, height: 2, },
       shadowOpacity: 0.5,
       elevation: 5,
+  },
+  slider: {
+    width: 200, 
+    marginLeft: 5, 
+    marginRight: 5
+  },
+  textinput: {
+    width: 50, 
+    height: 30 , 
+    borderColor: 'gray', 
+    borderWidth: 1, 
+    borderRadius: 5, 
+    paddingBottom: 5,
   },
   body: {
     flex: 1,
