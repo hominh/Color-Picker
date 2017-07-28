@@ -12,6 +12,7 @@ import {
   View,
   Platform,
   TextInput,
+  StatusBar,
   Slider,
 } from 'react-native';
 
@@ -23,23 +24,44 @@ class ColorControl extends Component {
 
     render() {
         return(
-            <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                <Text>{this.state.title}</Text>
+            <View style={styles.row}>
+                <Text>{this.props.colorName}</Text>
                 <Slider onValueChange = { (val) => { 
-                    this.setState({value: val});
-                     } } value = {this.state.value} style={styles.slider} minimumValue = {0} maximumValue = {255} step = {1} />
+                    this.props.onValueChange(val);
+                     } } value = {this.state.valueofText} style={styles.slider} minimumValue = {0} maximumValue = {255} step = {1} />
                 <View>
-                    <TextInput value={`${this.state.value}`} underlineColorAndroid = 'transparent' style={styles.textinput} />
+                    <TextInput value={`${this.props.valueofText}`} underlineColorAndroid = 'transparent' style={styles.textinput} />
                 </View>
             </View>
         )
     }
 }
 export default class App extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            red: 100,
+            green: 150,
+            blue: 200,
+        }
+    }
+
+    onSliderValueChanged = (color) => {
+        this.setState(color);
+    }
+
     renderHeader = () => {
         return (
-            <View style={styles.header}>
-                <Text style={styles.textHeader}>Color Picker</Text>
+            <View>
+                <StatusBar
+                    backgroundColor="blue"
+                    barStyle="light-content"
+
+                />
+                <View style={styles.header}>
+                    <Text style={styles.textHeader}>Color Picker</Text>
+                </View>
             </View>
         )
     }
@@ -50,11 +72,23 @@ export default class App extends Component {
         <View style={styles.body}>
             <View style={{ width: 350, height:300, flexDirection: 'column'}}>
                 <View style={{ flex: 1,  }}>
-                    <ColorControl title="R" value={100} />
-                    <ColorControl title="G" value={150} />
-                    <ColorControl title="B" value={200} />
+                    <ColorControl colorName="R" valueofText={this.state.red} onValueChange = {(val) => {
+                        const currentColor = this.state;
+                        const newColor = { ...currentColor, red:val}
+                        this.onSliderValueChanged(newColor);
+                    }} />
+                    <ColorControl colorName="G" valueofText={this.state.blue} onValueChange = {(val) => {
+                        const currentColor = this.state;
+                        const newColor = { ...currentColor, green:val}
+                        this.onSliderValueChanged(newColor);
+                    }} />
+                    <ColorControl colorName="B" valueofText={this.state.green} onValueChange = {(val) => {
+                        const currentColor = this.state;
+                        const newColor = { ...currentColor, blue:val}
+                        this.onSliderValueChanged(newColor);
+                    }} />
                 </View>
-                <View style={{ flex: 1, backgroundColor: 'red' }}>
+                <View style={{ flex: 1, backgroundColor: `rgb( ${this.state.red} , ${this.state.green} , ${this.state.blue} )` }}>
                 </View>
             </View>
         </View>
@@ -95,6 +129,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',        
+  },
+  row: {
+    flex: 1, 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    justifyContent: 'center'
   },
   textHeader: {
       fontSize: 16,
